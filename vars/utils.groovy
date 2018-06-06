@@ -79,6 +79,7 @@ def run(configs, concurrent = true) {
                 // value as a canonical path.
                 for (var in myconfig.env_vars) {
                     withEnv(runtime) {
+                        sh("env")
                         def varName = var.tokenize("=")[0].trim()
                         def varValue = var.tokenize("=")[1].trim()
                         // examine var value, if it contains var refs, expand them.
