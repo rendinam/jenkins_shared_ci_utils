@@ -276,6 +276,9 @@ def run(configs, concurrent = true) {
                                         // Record listing of all files starting at ${path}
                                         // (Native Java and Groovy approaches will not
                                         // work here)
+                                        println(".server_id = ${artifact.server_id}")
+                                        println("path       = ${path}")
+                                     
                                         sh(script: "find ${path} -type f",
                                            returnStdout: true).trim().tokenize('\n').each {
 
@@ -289,6 +292,7 @@ def run(configs, concurrent = true) {
                                                     artifact.match_prefix + '(.*)\\.json')) {
                                                 def basename = FilenameUtils.getBaseName(it)
                                                 def data = readFile(it)
+                                                println(".json match found: ${basename}")
 
                                                 // Store JSON in a logical map
                                                 // i.e. ["basename": [data]]
@@ -298,6 +302,7 @@ def run(configs, concurrent = true) {
 
                                         // Submit each request to the Artifactory server
                                         artifact.data.each { blob ->
+                                            println("Uploading artifact...")
                                             def bi_temp = server.upload spec: blob.value
 
                                             // Define retention scheme
