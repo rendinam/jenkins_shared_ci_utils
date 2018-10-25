@@ -317,7 +317,9 @@ def run(configs, concurrent = true) {
 
                                     } // end for-loop
 
+                                    println("About to execute 'server.publishBuildInfo buildInfo'...")
                                     server.publishBuildInfo buildInfo
+                                    println("Done with 'server.publishBuildInfo buildInfo'")
 
                                 } // end stage Artifactory
                             } // end test_configs check
