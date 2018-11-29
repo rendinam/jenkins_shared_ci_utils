@@ -367,7 +367,17 @@ def run(configs, concurrent = true) {
                         try {
                             stage("Test (${myconfig.name})") {
                                 for (cmd in myconfig.test_cmds) {
-                                    sh(script: cmd)
+                                    // Test for old-style (list of strings)
+                                    // or new-style (list of lists)
+                                    if (cmd.getClass() == java.util.ArrayList) {
+                                        if (cmd[1] == 'ignore_status') {
+                                            sh(script: "${cmd[0]} || true")
+                                        } else {
+                                            sh(script: cmd[0])
+                                        }
+                                    } else {//if (cmd.getClass() == java.lang.String) {
+                                        sh(script: cmd)
+                                    }
                                 }
                             }
                         }
