@@ -333,12 +333,12 @@ def stageArtifactory(config) {
             } // end find.each
 
             // If environment dump exists, send that to artifactory as well.
-            env_file = "env_${config.name}.txt"
-            if (fileExists(env_file)) {
-                println("Found conda environment dump. Adding to Artifactory payload.")
-                def env_data = readFile(env_file)
-                artifact.insert(env_file, env_data)
-            }
+            //env_file = "env_${config.name}.txt"
+            //if (fileExists(env_file)) {
+            //    println("Found conda environment dump. Adding to Artifactory payload.")
+            //    def env_data = readFile(env_file)
+            //    artifact.insert(env_file, env_data)
+            //}
 
             // Submit each request to the Artifactory server
             artifact.data.each { blob ->
