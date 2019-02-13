@@ -332,6 +332,14 @@ def stageArtifactory(config) {
                 }
             } // end find.each
 
+            // If environment dump exists, send that to artifactory as well.
+            env_file = "env_${config.name}.txt"
+            if (fileExists(env_file)) {
+                println("Found conda environment dump. Adding to Artifactory payload.")
+                def env_data = readFile(env_file)
+                artifact.insert(env_file, env_data)
+            }
+
             // Submit each request to the Artifactory server
             artifact.data.each { blob ->
                 def bi_temp = server.upload spec: blob.value
@@ -391,6 +399,13 @@ def buildAndTest(config, index) {
                 sh(script: cmd)
             }
         }
+
+        // Dump the conda environment definition to a file.
+        def conda_exe = "${env.WORKSPACE}/miniconda/bin/conda"
+        if (fileExists(conda_exe)) {
+            sh(script: "${conda_exe} list --explicit > 'env_${config.name}.txt'")
+        }
+
         if (config.test_cmds.size() > 0) {
             try {
                 stage("Test (${config.name})") {
@@ -417,8 +432,6 @@ def buildAndTest(config, index) {
 
             } // end test test_cmd finally clause
         } // end if(config.test_cmds...)
-        // Dump the conda environment definition to a file.
-        sh(script: "${env.WORKSPACE}/miniconda/bin/conda list --explicit > env_dump_${index}.txt")
 
     } // end withEnv
 }
