@@ -1,4 +1,4 @@
-@Library('utils@master') _
+@Library('utils@self-test') _
 
 //trivial edit
 // [skip ci] and [ci skip] have no effect here.
