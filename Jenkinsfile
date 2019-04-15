@@ -1,4 +1,7 @@
-@Library('utils@self-test') _
+//@Library('utils@self-test') _
+node('linux') {
+  load ./includeme
+}
 
 //trivial edit
 // [skip ci] and [ci skip] have no effect here.
