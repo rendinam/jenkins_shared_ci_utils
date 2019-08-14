@@ -1,4 +1,4 @@
-//@Library('utils@dayfix') _
+//@Library('utils@local_commit_var') _
 
 // [skip ci] and [ci skip] have no effect here.
 if (utils.scm_checkout(['skip_disable':true])) return

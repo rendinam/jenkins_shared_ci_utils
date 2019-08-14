@@ -524,7 +524,7 @@ def buildAndTest(config) {
             sh(script: "${conda_exe} env export > '${dump_name}'")
             def remote_out = sh(script: "git remote -v | head -1", returnStdout: true).trim()
             def remote_repo = remote_out.tokenize()[1]
-            commit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+            def commit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
             // Remove 'prefix' line as it isn't needed and complicates the
             // addition of the 'pip' section.
             sh(script: "sed -i '/prefix/d' '${dump_name}'")
